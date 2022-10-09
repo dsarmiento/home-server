@@ -1,0 +1,22 @@
+version: "3.3"
+services:
+  qbittorrent:
+    container_name: qbittorrent
+    image: guillaumedsde/alpine-qbittorrent-openvpn:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - OPENVPN_PROVIDER=SURFSHARK
+      - OPENVPN_CONFIG=us-ash.prod.surfshark.com_tcp
+      - OPENVPN_USERNAME=user
+      - OPENVPN_PASSWORD=pass
+      - PUID=1000
+      - PGID=1000
+      - LAN=lan
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+    volumes:
+      - "/media/data/downloads:/downloads"
+      - "~/data/qbittorrent/config:/config"
+      - "/etc/localtime:/etc/localtime:ro"
